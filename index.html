@@ -1,0 +1,1991 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronograma de Estudos ENEM - 17 Semanas</title>
+    <style>
+        :root {
+            --bg: #0f0f14;
+            --surface: #1a1a24;
+            --surface2: #222230;
+            --text: #e0e0e0;
+            --text-secondary: #a0a0b0;
+            --accent: #6c5ce7;
+            --accent-light: #a29bfe;
+            --seg: #ff6b6b;
+            --ter: #ffa502;
+            --qua: #26de81;
+            --qui: #45aaf2;
+            --border: #2d2d3d;
+            --tag-bg: #252535;
+            --revision-bg: #2a2a38;
+            --highlight: #ffd32a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ── Header ──────────────────── */
+        .header {
+            background: linear-gradient(135deg, #1a1a28 0%, #0f0f1a 100%);
+            border-bottom: 2px solid var(--accent);
+            padding: 2.5rem 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        .header h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, var(--accent-light), #fd79a8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        .header .subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .header .meta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .header .meta span {
+            background: var(--tag-bg);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        /* ── Navigation ──────────────── */
+        .week-nav {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            padding: 1rem 2rem;
+            justify-content: center;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 160px;
+            z-index: 99;
+        }
+        .week-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        .week-nav a:hover,
+        .week-nav a.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent-light);
+        }
+        .week-nav a.revision-phase {
+            border-color: var(--highlight);
+            color: var(--highlight);
+        }
+        .week-nav a.revision-phase:hover,
+        .week-nav a.revision-phase.active {
+            background: var(--highlight);
+            color: #000;
+        }
+
+        /* ── Main Container ──────────── */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* ── Week Section ────────────── */
+        .week-section {
+            margin-bottom: 2.5rem;
+            scroll-margin-top: 220px;
+        }
+        .week-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .week-number {
+            background: var(--accent);
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.3rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+        .week-phase {
+            font-size: 0.9rem;
+            color: var(--accent-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .week-header.revision .week-number {
+            background: var(--highlight);
+            color: #000;
+        }
+        .week-header.revision .week-phase {
+            color: var(--highlight);
+        }
+
+        /* ── Day Cards ───────────────── */
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.2rem;
+        }
+        .day-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, border-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .day-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+        .day-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+        .day-card.seg::before {
+            background: var(--seg);
+        }
+        .day-card.ter::before {
+            background: var(--ter);
+        }
+        .day-card.qua::before {
+            background: var(--qua);
+        }
+        .day-card.qui::before {
+            background: var(--qui);
+        }
+
+        .day-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+        .seg .day-label {
+            color: var(--seg);
+        }
+        .ter .day-label {
+            color: var(--ter);
+        }
+        .qua .day-label {
+            color: var(--qua);
+        }
+        .qui .day-label {
+            color: var(--qui);
+        }
+
+        .discipline-tag {
+            display: inline-block;
+            background: var(--tag-bg);
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .main-topic {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+        .subtopic {
+            color: var(--accent-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+        .objective {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--border);
+        }
+        .learn-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 0.8rem;
+        }
+        .learn-list li {
+            font-size: 0.85rem;
+            padding: 0.3rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            color: #ccc;
+        }
+        .learn-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 0.7rem;
+            top: 0.4rem;
+        }
+        .quest-count {
+            display: inline-block;
+            background: #2d2d3d;
+            color: #fff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .revision-badge {
+            margin-top: 0.8rem;
+            padding: 0.5rem 0.8rem;
+            background: var(--revision-bg);
+            border-radius: 8px;
+            font-size: 0.78rem;
+            color: #b0b0c0;
+            border-left: 3px solid var(--highlight);
+        }
+        .revision-badge strong {
+            color: var(--highlight);
+        }
+        .redacao-note {
+            margin-top: 0.6rem;
+            font-size: 0.8rem;
+            background: #2a1a1a;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            color: #ff9999;
+            border-left: 3px solid #ff4444;
+        }
+
+        /* ── Week Summary Box ────────── */
+        .week-summary {
+            margin-top: 1.5rem;
+            background: var(--surface2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .summary-block h4 {
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .summary-block ul {
+            list-style: none;
+            padding: 0;
+        }
+        .summary-block li {
+            font-size: 0.82rem;
+            color: #bbb;
+            padding: 0.2rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .summary-block li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        .formula-box {
+            background: #1a1a28;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #ffd32a;
+            margin-top: 0.3rem;
+            display: inline-block;
+        }
+
+        /* ── Footer ──────────────────── */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        /* ── Responsive ──────────────── */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .week-nav {
+                top: 130px;
+                padding: 0.8rem;
+                gap: 0.3rem;
+            }
+            .week-nav a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
+            }
+            .days-grid {
+                grid-template-columns: 1fr;
+            }
+            .week-section {
+                scroll-margin-top: 200px;
+            }
+        }
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.3rem;
+            }
+            .week-nav {
+                top: 120px;
+            }
+            .week-section {
+                scroll-margin-top: 180px;
+            }
+        }
+
+        /* ── Print styles ────────────── */
+        @media print {
+            .week-nav {
+                display: none;
+            }
+            .header {
+                position: static;
+            }
+            .week-section {
+                page-break-inside: avoid;
+                scroll-margin-top: 0;
+            }
+            body {
+                background: #fff;
+                color: #000;
+            }
+            .day-card {
+                border: 1px solid #ccc;
+                background: #fafafa;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- HEADER -->
+    <!-- ═══════════════════════════════════════ -->
+    <header class="header">
+        <h1>📚 Cronograma ENEM 2026</h1>
+        <p class="subtitle">Plano Completo • 17 Semanas • 1h30/dia</p>
+        <div class="meta">
+            <span>🗓️ Início: 14/Jul</span>
+            <span>🏁 Prova: 01 e 08/Nov</span>
+            <span>⏰ 1h30/dia útil</span>
+            <span>📝 Redação semanal</span>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- WEEK NAVIGATION -->
+    <!-- ═══════════════════════════════════════ -->
+    <nav class="week-nav" id="weekNav">
+        <a href="#semana1">S1</a><a href="#semana2">S2</a><a href="#semana3">S3</a>
+        <a href="#semana4">S4</a><a href="#semana5">S5</a><a href="#semana6">S6</a>
+        <a href="#semana7">S7</a><a href="#semana8">S8</a><a href="#semana9">S9</a>
+        <a href="#semana10">S10</a><a href="#semana11">S11</a><a href="#semana12">S12</a>
+        <a href="#semana13">S13</a><a href="#semana14">S14</a>
+        <a href="#semana15" class="revision-phase">S15</a>
+        <a href="#semana16" class="revision-phase">S16</a>
+        <a href="#semana17" class="revision-phase">S17</a>
+    </nav>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- MAIN CONTENT -->
+    <!-- ═══════════════════════════════════════ -->
+    <main class="container">
+
+        <!-- ============================================ -->
+        <!-- SEMANA 1 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana1">
+            <div class="week-header">
+                <span class="week-number">SEMANA 1</span>
+                <span class="week-phase">🔰 Fundação</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">14 a 20 de Julho</span>
+            </div>
+            <div class="days-grid">
+                <!-- Segunda -->
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Aritmética Básica</div>
+                    <div class="subtopic">Frações • Potenciação • Radiciação</div>
+                    <p class="objective">🎯 Dominar operações fundamentais e simplificação de expressões numéricas.</p>
+                    <ul class="learn-list">
+                        <li>Operações com frações (soma, subtração, multiplicação, divisão)</li>
+                        <li>Propriedades das potências (produto, quociente, potência de potência)</li>
+                        <li>Radiciação e simplificação de radicais</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <!-- Terça -->
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Interpretação de Texto</div>
+                    <div class="subtopic">Estrutura textual • Tese • Argumentos</div>
+                    <p class="objective">🎯 Identificar a ideia central, tese e estratégias argumentativas.</p>
+                    <ul class="learn-list">
+                        <li>Diferença entre fato, opinião e argumento</li>
+                        <li>Identificação da tese em textos dissertativos</li>
+                        <li>Relação entre parágrafos e progressão textual</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                    <div class="redacao-note">📝 Redação: Diagnóstico — Escreva 1 redação sobre tema livre para avaliar seu nível atual.</div>
+                </div>
+                <!-- Quarta -->
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Biologia: Citologia</div>
+                    <div class="subtopic">Membrana plasmática • Organelas • Núcleo</div>
+                    <p class="objective">🎯 Compreender estrutura e função das organelas celulares.</p>
+                    <ul class="learn-list">
+                        <li>Transporte ativo e passivo (difusão, osmose, bomba Na/K)</li>
+                        <li>Funções de mitocôndria, ribossomo, complexo de Golgi, lisossomo</li>
+                        <li>Núcleo, DNA, cromatina e ciclo celular (introdução)</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <!-- Quinta -->
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">Geografia: Cartografia</div>
+                    <div class="subtopic">Escalas • Projeções • Coordenadas geográficas</div>
+                    <p class="objective">🎯 Interpretar mapas e resolver problemas com escala cartográfica.</p>
+                    <ul class="learn-list">
+                        <li>Tipos de escala (numérica e gráfica) e conversões</li>
+                        <li>Projeções de Mercator, Peters e Robinson</li>
+                        <li>Latitude, longitude e fusos horários</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+            </div>
+            <!-- Resumo da Semana -->
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia resumos de Citologia e Aritmética (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar frações e interpretação de texto</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Em Matemática: esquecer regras de sinais na potenciação</li>
+                        <li>Em Cartografia: confundir escala grande com área grande</li>
+                        <li>Na redação: fugir do tema proposto</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup></span>
+                    <span class="formula-box">Escala = distância no mapa / distância real</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 2 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana2">
+            <div class="week-header">
+                <span class="week-number">SEMANA 2</span>
+                <span class="week-phase">🔰 Fundação</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">21 a 27 de Julho</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Razão e Proporção</div>
+                    <div class="subtopic">Regra de três • Porcentagem</div>
+                    <p class="objective">🎯 Resolver problemas de proporcionalidade direta e inversa.</p>
+                    <ul class="learn-list">
+                        <li>Razão e proporção: propriedades fundamentais</li>
+                        <li>Regra de três simples e composta</li>
+                        <li>Cálculo de porcentagem, acréscimos e descontos</li>
+                    </ul>
+                    <span class="quest-count">📝 12 questões ENEM</span>
+                    <div class="revision-badge"><strong>🔄 Revisão:</strong> Frações (Semana 1)</div>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Gramática</div>
+                    <div class="subtopic">Ortografia • Acentuação • Crase</div>
+                    <p class="objective">🎯 Dominar as regras de acentuação gráfica e uso da crase.</p>
+                    <ul class="learn-list">
+                        <li>Regras de acentuação (oxítonas, paroxítonas, proparoxítonas)</li>
+                        <li>Uso da crase: regra geral e casos proibidos</li>
+                        <li>Palavras homófonas e parônimas frequentes no ENEM</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                    <div class="redacao-note">📝 Redação: Estrutura da dissertação — Escreva introdução + 1 parágrafo de desenvolvimento.</div>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Física: Cinemática</div>
+                    <div class="subtopic">Movimento uniforme (MU)</div>
+                    <p class="objective">🎯 Compreender os conceitos de velocidade constante e função horária.</p>
+                    <ul class="learn-list">
+                        <li>Conceitos de posição, deslocamento, velocidade</li>
+                        <li>Função horária: S = S₀ + v·t</li>
+                        <li>Análise de gráficos de MU (posição × tempo)</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">História: Brasil Colônia</div>
+                    <div class="subtopic">Povos indígenas • Período pré-colonial</div>
+                    <p class="objective">🎯 Compreender o encontro entre europeus e povos originários.</p>
+                    <ul class="learn-list">
+                        <li>Sociedades indígenas antes da chegada dos portugueses</li>
+                        <li>Primeiros contatos e escambo (pau-brasil)</li>
+                        <li>Capitanias hereditárias e início da colonização</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia Cinemática e Regra de três (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar Citologia e Cartografia (Semana 1)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Confundir regra de três direta com inversa</li>
+                        <li>Esquecer que crase não ocorre antes de palavra masculina</li>
+                        <li>Achar que velocidade zero significa repouso absoluto</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">S = S₀ + v·t</span>
+                    <span class="formula-box">% = (parte/total) × 100</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 3 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana3">
+            <div class="week-header">
+                <span class="week-number">SEMANA 3</span>
+                <span class="week-phase">🔰 Fundação</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">28 Jul a 03 Ago</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Equações e Sistemas</div>
+                    <div class="subtopic">Equação do 1º grau • Sistemas lineares</div>
+                    <p class="objective">🎯 Resolver equações e sistemas com eficiência para problemas contextualizados.</p>
+                    <ul class="learn-list">
+                        <li>Equação do 1º grau: resolução e verificação</li>
+                        <li>Sistemas 2×2: método da substituição e adição</li>
+                        <li>Aplicação em problemas de idades, misturas e valores</li>
+                    </ul>
+                    <span class="quest-count">📝 12 questões ENEM</span>
+                    <div class="revision-badge"><strong>🔄 Revisão:</strong> Porcentagem (Semana 2)</div>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Literatura</div>
+                    <div class="subtopic">Trovadorismo • Humanismo • Classicismo</div>
+                    <p class="objective">🎯 Conhecer o contexto histórico e principais características das escolas medievais.</p>
+                    <ul class="learn-list">
+                        <li>Trovadorismo: cantigas de amor e de amigo</li>
+                        <li>Humanismo: Gil Vicente e o teatro popular</li>
+                        <li>Classicismo: Camões e Os Lusíadas (épica e lírica)</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Química: Ligações Químicas</div>
+                    <div class="subtopic">Iônica • Covalente • Metálica</div>
+                    <p class="objective">🎯 Diferenciar os tipos de ligação e prever propriedades das substâncias.</p>
+                    <ul class="learn-list">
+                        <li>Regra do octeto e estabilidade</li>
+                        <li>Ligação iônica: transferência de elétrons, compostos iônicos</li>
+                        <li>Ligação covalente: compartilhamento, geometria molecular simples</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">Filosofia: Sócrates, Platão, Aristóteles</div>
+                    <div class="subtopic">Maiêutica • Mundo das Ideias • Ética</div>
+                    <p class="objective">🎯 Compreender os fundamentos do pensamento filosófico ocidental.</p>
+                    <ul class="learn-list">
+                        <li>Sócrates: maiêutica e ironia</li>
+                        <li>Platão: mito da caverna e mundo das ideias</li>
+                        <li>Aristóteles: lógica, ética e política</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia Ligações Químicas e Literatura medieval (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar Cinemática MU e Brasil Colônia (Semana 2)</li>
+                        <li><strong>30 dias:</strong> Revisar Citologia (Semana 1)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Esquecer de verificar a solução na equação original</li>
+                        <li>Confundir ligação iônica com covalente pelo tipo de elementos</li>
+                        <li>Achar que Platão e Aristóteles tinham a mesma visão sobre o conhecimento</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">ax + b = 0 → x = -b/a</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 4 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana4">
+            <div class="week-header">
+                <span class="week-number">SEMANA 4</span>
+                <span class="week-phase">📘 Desenvolvimento</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">04 a 10 de Agosto</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Função Afim (1º grau)</div>
+                    <div class="subtopic">Gráfico • Coeficientes • Zero da função</div>
+                    <p class="objective">🎯 Analisar e interpretar gráficos de funções lineares no contexto do ENEM.</p>
+                    <ul class="learn-list">
+                        <li>Definição: f(x) = ax + b</li>
+                        <li>Coeficiente angular (a) e linear (b)</li>
+                        <li>Zero da função e análise de crescimento/decrescimento</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                    <div class="revision-badge"><strong>🔄 Revisão:</strong> Equações (Semana 3)</div>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Gramática: Sintaxe</div>
+                    <div class="subtopic">Sujeito • Predicado • Complementos verbais</div>
+                    <p class="objective">🎯 Identificar funções sintáticas e analisar períodos simples.</p>
+                    <ul class="learn-list">
+                        <li>Tipos de sujeito (simples, composto, oculto, indeterminado, inexistente)</li>
+                        <li>Predicado verbal, nominal e verbo-nominal</li>
+                        <li>Objeto direto e indireto</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                    <div class="redacao-note">📝 Redação: Escreva 1 redação completa com tema de cidadania. Foco na estrutura.</div>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Física: Cinemática</div>
+                    <div class="subtopic">Movimento Uniformemente Variado (MUV)</div>
+                    <p class="objective">🎯 Compreender aceleração constante e equações do MUV.</p>
+                    <ul class="learn-list">
+                        <li>Conceito de aceleração</li>
+                        <li>Equação horária: S = S₀ + v₀t + (a/2)t²</li>
+                        <li>Equação de Torricelli: v² = v₀² + 2aΔS</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">Geografia: Climatologia</div>
+                    <div class="subtopic">Climas do Brasil • Massas de ar • El Niño/La Niña</div>
+                    <p class="objective">🎯 Compreender a dinâmica climática brasileira e fenômenos globais.</p>
+                    <ul class="learn-list">
+                        <li>Classificação climática do Brasil (equatorial, tropical, semiárido...)</li>
+                        <li>Massas de ar que atuam no território brasileiro</li>
+                        <li>Fenômenos El Niño e La Niña e seus impactos</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia MUV e Climatologia (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar Ligações Químicas (Semana 3)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Confundir coeficiente angular com linear no gráfico</li>
+                        <li>Esquecer o sinal da aceleração na equação de Torricelli</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">v² = v₀² + 2aΔS</span>
+                    <span class="formula-box">f(x) = ax + b</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 5 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana5">
+            <div class="week-header">
+                <span class="week-number">SEMANA 5</span>
+                <span class="week-phase">📘 Desenvolvimento</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">11 a 17 de Agosto</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Função Quadrática (2º grau)</div>
+                    <div class="subtopic">Parábola • Vértice • Raízes</div>
+                    <p class="objective">🎯 Analisar máximos e mínimos em problemas contextualizados.</p>
+                    <ul class="learn-list">
+                        <li>Definição: f(x) = ax² + bx + c</li>
+                        <li>Coordenadas do vértice: Xv = -b/2a, Yv = -Δ/4a</li>
+                        <li>Raízes (fórmula de Bhaskara) e análise do discriminante</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                    <div class="revision-badge"><strong>🔄 Revisão:</strong> Função Afim (Semana 4)</div>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Figuras de Linguagem</div>
+                    <div class="subtopic">Metáfora • Ironia • Hipérbole • Eufemismo</div>
+                    <p class="objective">🎯 Reconhecer e interpretar figuras de linguagem em textos e imagens.</p>
+                    <ul class="learn-list">
+                        <li>Figuras de palavra: metáfora, metonímia, catacrese</li>
+                        <li>Figuras de pensamento: ironia, hipérbole, eufemismo</li>
+                        <li>Figuras de construção: elipse, zeugma, polissíndeto</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                    <div class="redacao-note">📝 Redação: Desenvolvimento — Pratique 2 parágrafos de desenvolvimento com repertório.</div>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Química: Funções Inorgânicas</div>
+                    <div class="subtopic">Ácidos • Bases • Sais • Óxidos</div>
+                    <p class="objective">🎯 Classificar substâncias inorgânicas e prever reações de neutralização.</p>
+                    <ul class="learn-list">
+                        <li>Ácidos: definição de Arrhenius, nomenclatura</li>
+                        <li>Bases: hidróxidos, solubilidade</li>
+                        <li>Reação de neutralização: ácido + base → sal + água</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">Sociologia: Cultura e Estado</div>
+                    <div class="subtopic">Diversidade cultural • Etnocentrismo • Cidadania</div>
+                    <p class="objective">🎯 Compreender conceitos de cultura material/imaterial e relativismo cultural.</p>
+                    <ul class="learn-list">
+                        <li>Cultura material e imaterial</li>
+                        <li>Etnocentrismo vs. relativismo cultural</li>
+                        <li>Conceito de Estado, nação e território</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia Funções Inorgânicas e Figuras de Linguagem (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar MUV e Climatologia (Semana 4)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Esquecer o sinal negativo no Xv (-b/2a)</li>
+                        <li>Confundir ácido forte com ácido concentrado</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">Xv = -b/2a &nbsp; Yv = -Δ/4a</span>
+                    <span class="formula-box">Δ = b² - 4ac</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 6 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana6">
+            <div class="week-header">
+                <span class="week-number">SEMANA 6</span>
+                <span class="week-phase">📘 Desenvolvimento</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">18 a 24 de Agosto</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Geometria Plana</div>
+                    <div class="subtopic">Áreas • Perímetros • Triângulos • Círculos</div>
+                    <p class="objective">🎯 Calcular áreas das principais figuras planas em situações-problema.</p>
+                    <ul class="learn-list">
+                        <li>Área do triângulo, quadrado, retângulo, trapézio, losango</li>
+                        <li>Área do círculo e comprimento da circunferência</li>
+                        <li>Teorema de Pitágoras</li>
+                    </ul>
+                    <span class="quest-count">📝 12 questões ENEM</span>
+                    <div class="revision-badge"><strong>🔄 Revisão:</strong> Função Quadrática (Semana 5)</div>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Literatura: Barroco e Arcadismo</div>
+                    <div class="subtopic">Gregório de Matos • Cláudio Manuel da Costa</div>
+                    <p class="objective">🎯 Contrastar as características do Barroco (conflito) e Arcadismo (equilíbrio).</p>
+                    <ul class="learn-list">
+                        <li>Barroco: cultismo, conceptismo, fugacidade da vida</li>
+                        <li>Arcadismo: bucolismo, pastoralismo, inutilia truncat</li>
+                        <li>Contexto histórico: Contrarreforma e Iluminismo</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Biologia: Ecologia</div>
+                    <div class="subtopic">Cadeias alimentares • Ciclos biogeoquímicos</div>
+                    <p class="objective">🎯 Compreender fluxo de energia e ciclos da matéria nos ecossistemas.</p>
+                    <ul class="learn-list">
+                        <li>Níveis tróficos: produtores, consumidores, decompositores</li>
+                        <li>Pirâmides ecológicas (energia, biomassa, números)</li>
+                        <li>Ciclos do carbono e nitrogênio</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">História: Brasil Império</div>
+                    <div class="subtopic">Independência • Primeiro Reinado • Período Regencial</div>
+                    <p class="objective">🎯 Compreender o processo de independência e a consolidação do Estado brasileiro.</p>
+                    <ul class="learn-list">
+                        <li>Independência do Brasil (1822) e Primeiro Reinado</li>
+                        <li>Período Regencial e revoltas (Cabanagem, Farroupilha, Balaiada)</li>
+                        <li>Segundo Reinado e estabilidade política</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia Ecologia e Geometria Plana (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar Funções Inorgânicas (Semana 5)</li>
+                        <li><strong>30 dias:</strong> Revisar Cinemática MUV (Semana 4)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Usar diâmetro em vez de raio na área do círculo (A = πr²)</li>
+                        <li>Inverter a ordem dos níveis tróficos na pirâmide de energia</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">Aᵦ = b·h/2 &nbsp; A◯ = πr²</span>
+                    <span class="formula-box">a² = b² + c²</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 7 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana7">
+            <div class="week-header">
+                <span class="week-number">SEMANA 7</span>
+                <span class="week-phase">📘 Desenvolvimento</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">25 a 31 de Agosto</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Geometria Espacial</div>
+                    <div class="subtopic">Volume de prismas, cilindros, cones e esferas</div>
+                    <p class="objective">🎯 Calcular volumes e áreas de superfície de sólidos geométricos.</p>
+                    <ul class="learn-list">
+                        <li>Volume do prisma e cilindro (V = Ab · h)</li>
+                        <li>Volume do cone e pirâmide (V = Ab · h / 3)</li>
+                        <li>Volume e área da esfera</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                    <div class="revision-badge"><strong>🔄 Revisão:</strong> Geometria Plana (Semana 6)</div>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Interpretação e Gêneros Textuais</div>
+                    <div class="subtopic">Charge • Tirinha • Artigo de opinião • Notícia</div>
+                    <p class="objective">🎯 Identificar características e finalidades de diferentes gêneros textuais.</p>
+                    <ul class="learn-list">
+                        <li>Diferença entre gêneros jornalísticos e literários</li>
+                        <li>Interpretação de charges e tirinhas (humor e crítica)</li>
+                        <li>Estrutura do artigo de opinião</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                    <div class="redacao-note">📝 Redação: Conclusão e proposta de intervenção — Escreva apenas conclusão para 2 temas diferentes.</div>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Física: Dinâmica</div>
+                    <div class="subtopic">Leis de Newton • Força peso • Força de atrito</div>
+                    <p class="objective">🎯 Aplicar as leis de Newton em situações cotidianas e problemas.</p>
+                    <ul class="learn-list">
+                        <li>1ª Lei (Inércia), 2ª Lei (Fr = m·a), 3ª Lei (Ação e Reação)</li>
+                        <li>Força peso (P = m·g) e força normal</li>
+                        <li>Força de atrito estático e cinético</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">Geografia: Geopolítica</div>
+                    <div class="subtopic">Guerra Fria • Nova Ordem Mundial • Conflitos atuais</div>
+                    <p class="objective">🎯 Compreender as transformações geopolíticas do século XX e XXI.</p>
+                    <ul class="learn-list">
+                        <li>Bipolaridade (EUA × URSS) e principais conflitos</li>
+                        <li>Fim da URSS e Nova Ordem Mundial</li>
+                        <li>Conflitos atuais: Oriente Médio, Ucrânia, tensões no Pacífico</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia Dinâmica e Gêneros Textuais (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar Ecologia e Brasil Império (Semana 6)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Esquecer de dividir por 3 no volume de cone e pirâmide</li>
+                        <li>Achar que peso e massa são a mesma coisa</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">V<sub>cone</sub> = πr²h/3</span>
+                    <span class="formula-box">Fr = m·a &nbsp; P = m·g</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 8 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana8">
+            <div class="week-header">
+                <span class="week-number">SEMANA 8</span>
+                <span class="week-phase">📘 Desenvolvimento</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">01 a 07 de Setembro</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Trigonometria</div>
+                    <div class="subtopic">Triângulo retângulo • Seno, cosseno, tangente</div>
+                    <p class="objective">🎯 Aplicar razões trigonométricas em problemas de cálculo de distâncias.</p>
+                    <ul class="learn-list">
+                        <li>Definições: sen = CO/H, cos = CA/H, tg = CO/CA</li>
+                        <li>Ângulos notáveis (30°, 45°, 60°)</li>
+                        <li>Lei dos senos e lei dos cossenos (introdução)</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                    <div class="revision-badge"><strong>🔄 Revisão:</strong> Geometria Espacial (Semana 7)</div>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Gramática: Concordância e Regência</div>
+                    <div class="subtopic">Concordância verbal e nominal • Regência de verbos</div>
+                    <p class="objective">🎯 Dominar as regras de concordância e regência mais cobradas no ENEM.</p>
+                    <ul class="learn-list">
+                        <li>Concordância verbal: sujeito composto, coletivos, porcentagens</li>
+                        <li>Concordância nominal: adjetivos com múltiplos substantivos</li>
+                        <li>Regência: verbos com preposição (assistir, visar, aspirar, obedecer)</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                    <div class="redacao-note">📝 Redação: Escreva 1 redação completa com tema de tecnologia. Foco em conectivos.</div>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Química: Estequiometria</div>
+                    <div class="subtopic">Cálculo estequiométrico • Massa molar • Rendimento</div>
+                    <p class="objective">🎯 Realizar cálculos estequiométricos a partir de equações balanceadas.</p>
+                    <ul class="learn-list">
+                        <li>Balanceamento de equações (método das tentativas)</li>
+                        <li>Cálculo de massa molar e número de mols (n = m/MM)</li>
+                        <li>Estequiometria: proporção entre reagentes e produtos</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">História: Era Vargas e Ditadura Militar</div>
+                    <div class="subtopic">Getúlio Vargas • 1964 • AI-5 • Redemocratização</div>
+                    <p class="objective">🎯 Compreender os períodos autoritários e transições democráticas no Brasil.</p>
+                    <ul class="learn-list">
+                        <li>Era Vargas (1930-1945): Estado Novo e CLT</li>
+                        <li>Golpe de 1964 e Ditadura Militar</li>
+                        <li>AI-5, milagre econômico, abertura política e Diretas Já</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia Estequiometria e Concordância (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar Dinâmica e Geopolítica (Semana 7)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Confundir seno com cosseno nos ângulos notáveis</li>
+                        <li>Esquecer de balancear a equação antes do cálculo estequiométrico</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">sen 30°=1/2 &nbsp; cos 60°=1/2</span>
+                    <span class="formula-box">n = m / MM</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 9 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana9">
+            <div class="week-header">
+                <span class="week-number">SEMANA 9</span>
+                <span class="week-phase">📗 Consolidação</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">08 a 14 de Setembro</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Função Exponencial e Logaritmos</div>
+                    <div class="subtopic">Crescimento exponencial • Propriedades dos logaritmos</div>
+                    <p class="objective">🎯 Modelar situações de crescimento/decrescimento e resolver equações exponenciais.</p>
+                    <ul class="learn-list">
+                        <li>Função exponencial: f(x) = aˣ</li>
+                        <li>Definição de logaritmo: logₐb = x ⇔ aˣ = b</li>
+                        <li>Propriedades: log(ab) = log a + log b</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                    <div class="revision-badge"><strong>🔄 Revisão:</strong> Trigonometria (Semana 8)</div>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Literatura: Romantismo</div>
+                    <div class="subtopic">Gerações românticas • José de Alencar • Castro Alves</div>
+                    <p class="objective">🎯 Identificar as fases do Romantismo brasileiro e suas características.</p>
+                    <ul class="learn-list">
+                        <li>1ª geração: nacionalismo e indianismo (Gonçalves Dias)</li>
+                        <li>2ª geração: ultrarromantismo e egocentrismo (Álvares de Azevedo)</li>
+                        <li>3ª geração: condoreirismo e abolicionismo (Castro Alves)</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Física: Trabalho e Energia</div>
+                    <div class="subtopic">Energia cinética • Potencial • Conservação</div>
+                    <p class="objective">🎯 Aplicar o princípio da conservação da energia mecânica.</p>
+                    <ul class="learn-list">
+                        <li>Trabalho: W = F·d·cosθ</li>
+                        <li>Energia cinética (Ec = mv²/2) e potencial gravitacional (Epg = mgh)</li>
+                        <li>Conservação da energia mecânica: Em = Ec + Ep</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">Filosofia: Iluminismo e Ética</div>
+                    <div class="subtopic">Rousseau • Kant • Ética contemporânea</div>
+                    <p class="objective">🎯 Compreender os fundamentos do pensamento iluminista e questões éticas.</p>
+                    <ul class="learn-list">
+                        <li>Rousseau: contrato social e vontade geral</li>
+                        <li>Kant: imperativo categórico e autonomia</li>
+                        <li>Ética aplicada: bioética, direitos humanos</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia Energia e Romantismo (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar Estequiometria e Era Vargas (Semana 8)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Esquecer que log(a+b) ≠ log a + log b</li>
+                        <li>Confundir energia potencial gravitacional com energia cinética</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">logₐ(b·c) = logₐb + logₐc</span>
+                    <span class="formula-box">Ec = mv²/2 &nbsp; Epg = mgh</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 10 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana10">
+            <div class="week-header">
+                <span class="week-number">SEMANA 10</span>
+                <span class="week-phase">📗 Consolidação</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">15 a 21 de Setembro</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Progressões (PA e PG)</div>
+                    <div class="subtopic">Termo geral • Soma dos termos</div>
+                    <p class="objective">🎯 Resolver problemas envolvendo sequências numéricas e reconhecimento de padrões.</p>
+                    <ul class="learn-list">
+                        <li>PA: razão, termo geral (aₙ = a₁ + (n-1)r)</li>
+                        <li>Soma da PA: Sₙ = (a₁+aₙ)n/2</li>
+                        <li>PG: razão, termo geral (aₙ = a₁·qⁿ⁻¹), soma finita e infinita</li>
+                    </ul>
+                    <span class="quest-count">📝 12 questões ENEM</span>
+                    <div class="revision-badge"><strong>🔄 Revisão:</strong> Função Exponencial (Semana 9)</div>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Interpretação de Texto (Avançado)</div>
+                    <div class="subtopic">Intertextualidade • Polifonia • Ambiguidade</div>
+                    <p class="objective">🎯 Analisar textos complexos com múltiplas camadas de sentido.</p>
+                    <ul class="learn-list">
+                        <li>Intertextualidade: citação, paráfrase, paródia</li>
+                        <li>Polifonia e discurso citado</li>
+                        <li>Ambiguidade intencional e duplo sentido</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                    <div class="redacao-note">📝 Redação: Escreva 1 redação completa com tema de saúde pública.</div>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Biologia: Genética</div>
+                    <div class="subtopic">Leis de Mendel • Heredogramas • Probabilidade</div>
+                    <p class="objective">🎯 Aplicar as leis de Mendel e interpretar heredogramas.</p>
+                    <ul class="learn-list">
+                        <li>1ª Lei de Mendel: segregação dos fatores</li>
+                        <li>Conceitos: homozigoto, heterozigoto, dominante, recessivo</li>
+                        <li>Interpretação de heredogramas e cálculo de probabilidades</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">Geografia: Urbanização e Demografia</div>
+                    <div class="subtopic">Êxodo rural • Megalópoles • Transição demográfica</div>
+                    <p class="objective">🎯 Compreender os processos de urbanização e dinâmica populacional.</p>
+                    <ul class="learn-list">
+                        <li>Urbanização brasileira e problemas urbanos</li>
+                        <li>Hierarquia urbana e megalópoles</li>
+                        <li>Transição demográfica e pirâmides etárias</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia Genética e PA/PG (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar Trabalho e Energia (Semana 9)</li>
+                        <li><strong>30 dias:</strong> Revisar Dinâmica (Semana 7)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Confundir PA com PG na identificação do padrão</li>
+                        <li>Interpretar heredograma sem considerar a possibilidade de heterozigose</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">PA: aₙ = a₁ + (n-1)r</span>
+                    <span class="formula-box">PG infinita: S∞ = a₁/(1-q)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 11 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana11">
+            <div class="week-header">
+                <span class="week-number">SEMANA 11</span>
+                <span class="week-phase">📗 Consolidação</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">22 a 28 de Setembro</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Estatística e Análise de Gráficos</div>
+                    <div class="subtopic">Média • Mediana • Moda • Interpretação de tabelas</div>
+                    <p class="objective">🎯 Calcular medidas de tendência central e interpretar gráficos estatísticos.</p>
+                    <ul class="learn-list">
+                        <li>Média aritmética simples e ponderada</li>
+                        <li>Mediana e moda</li>
+                        <li>Interpretação de gráficos de barras, setores e linhas</li>
+                    </ul>
+                    <span class="quest-count">📝 12 questões ENEM</span>
+                    <div class="revision-badge"><strong>🔄 Revisão:</strong> PA e PG (Semana 10)</div>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Literatura: Realismo e Naturalismo</div>
+                    <div class="subtopic">Machado de Assis • Aluísio Azevedo</div>
+                    <p class="objective">🎯 Diferenciar Realismo (análise psicológica) de Naturalismo (determinismo).</p>
+                    <ul class="learn-list">
+                        <li>Realismo: ironia, pessimismo, análise interior (Dom Casmurro)</li>
+                        <li>Naturalismo: zoomorfização, determinismo biológico e social</li>
+                        <li>Contexto: cientificismo, evolucionismo</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                    <div class="redacao-note">📝 Redação: Escreva 1 redação completa com tema de educação.</div>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Química: Química Orgânica</div>
+                    <div class="subtopic">Cadeias carbônicas • Funções orgânicas básicas</div>
+                    <p class="objective">🎯 Classificar cadeias carbônicas e identificar funções orgânicas.</p>
+                    <ul class="learn-list">
+                        <li>Classificação de cadeias (aberta/fechada, saturada/insaturada)</li>
+                        <li>Hidrocarbonetos: alcanos, alcenos, alcinos</li>
+                        <li>Funções: álcool, ácido carboxílico, éster, amina, amida</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">Sociologia: Movimentos Sociais e Trabalho</div>
+                    <div class="subtopic">Sindicalismo • Movimentos identitários • Mundo do trabalho</div>
+                    <p class="objective">🎯 Compreender as transformações do mundo do trabalho e lutas sociais.</p>
+                    <ul class="learn-list">
+                        <li>Trabalho: fordismo, toyotismo, uberização</li>
+                        <li>Movimentos sociais clássicos e novos movimentos</li>
+                        <li>Direitos trabalhistas e reforma trabalhista</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia Química Orgânica e Estatística (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar Genética e Urbanização (Semana 10)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Confundir média com mediana em distribuições assimétricas</li>
+                        <li>Trocar a nomenclatura de álcool e éter</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">Média = Σxᵢ / n</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 12 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana12">
+            <div class="week-header">
+                <span class="week-number">SEMANA 12</span>
+                <span class="week-phase">📗 Consolidação</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">29 Set a 05 Out</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Probabilidade e Matemática Financeira</div>
+                    <div class="subtopic">Espaço amostral • Juros simples e compostos</div>
+                    <p class="objective">🎯 Calcular probabilidades e resolver problemas financeiros do cotidiano.</p>
+                    <ul class="learn-list">
+                        <li>Probabilidade: P = casos favoráveis / casos possíveis</li>
+                        <li>Juros simples: J = C·i·t</li>
+                        <li>Juros compostos: M = C(1+i)ᵗ</li>
+                    </ul>
+                    <span class="quest-count">📝 12 questões ENEM</span>
+                    <div class="revision-badge"><strong>🔄 Revisão:</strong> Estatística (Semana 11)</div>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Gramática: Pontuação e Conectivos</div>
+                    <div class="subtopic">Vírgula • Ponto e vírgula • Conjunções</div>
+                    <p class="objective">🎯 Usar corretamente os sinais de pontuação e conectivos na redação.</p>
+                    <ul class="learn-list">
+                        <li>Uso da vírgula: enumeração, vocativo, aposto, adjunto adverbial</li>
+                        <li>Conectivos de adição, oposição, conclusão, causa</li>
+                        <li>Ponto e vírgula e dois-pontos</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Física: Eletricidade</div>
+                    <div class="subtopic">Lei de Ohm • Potência elétrica • Circuitos</div>
+                    <p class="objective">🎯 Aplicar a Lei de Ohm e calcular potência em circuitos simples.</p>
+                    <ul class="learn-list">
+                        <li>Lei de Ohm: U = R·i</li>
+                        <li>Potência: P = U·i = R·i²</li>
+                        <li>Associação de resistores em série e paralelo</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">História: Guerras Mundiais e Guerra Fria</div>
+                    <div class="subtopic">1ª e 2ª Guerra • Bipolaridade • Descolonização</div>
+                    <p class="objective">🎯 Compreender as causas e consequências dos grandes conflitos do século XX.</p>
+                    <ul class="learn-list">
+                        <li>1ª Guerra: alianças, trincheiras, Tratado de Versalhes</li>
+                        <li>2ª Guerra: nazifascismo, Holocausto, bomba atômica</li>
+                        <li>Guerra Fria: OTAN, Pacto de Varsóvia, Corrida Espacial</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia Eletricidade e Probabilidade (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar Química Orgânica e Movimentos Sociais (Semana 11)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Usar juros simples quando o problema pede juros compostos</li>
+                        <li>Esquecer que em paralelo a tensão é a mesma e a corrente se divide</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">U = R·i &nbsp; P = U·i</span>
+                    <span class="formula-box">M = C(1+i)ᵗ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 13 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana13">
+            <div class="week-header">
+                <span class="week-number">SEMANA 13</span>
+                <span class="week-phase">📙 Aprofundamento</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">06 a 12 de Outubro</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Geometria Analítica</div>
+                    <div class="subtopic">Ponto • Reta • Distância</div>
+                    <p class="objective">🎯 Calcular distância entre pontos e equação da reta no plano cartesiano.</p>
+                    <ul class="learn-list">
+                        <li>Distância entre dois pontos: d = √[(x₂-x₁)² + (y₂-y₁)²]</li>
+                        <li>Equação da reta: y = mx + n</li>
+                        <li>Coeficiente angular: m = (y₂-y₁)/(x₂-x₁)</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                    <div class="revision-badge"><strong>🔄 Revisão:</strong> Probabilidade (Semana 12)</div>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Literatura: Modernismo</div>
+                    <div class="subtopic">Semana de 22 • Gerações modernistas</div>
+                    <p class="objective">🎯 Compreender as fases do Modernismo brasileiro e seus principais autores.</p>
+                    <ul class="learn-list">
+                        <li>1ª fase: Semana de 22, antropofagia, Mário e Oswald de Andrade</li>
+                        <li>2ª fase: romance de 30 (Graciliano Ramos, Rachel de Queiroz)</li>
+                        <li>3ª fase: Guimarães Rosa e Clarice Lispector</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                    <div class="redacao-note">📝 Redação: Escreva 1 redação completa com tema de meio ambiente.</div>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Biologia: Corpo Humano</div>
+                    <div class="subtopic">Sistemas: digestório • Respiratório • Imunológico</div>
+                    <p class="objective">🎯 Compreender o funcionamento integrado dos principais sistemas do corpo.</p>
+                    <ul class="learn-list">
+                        <li>Sistema digestório: digestão e absorção de nutrientes</li>
+                        <li>Sistema respiratório: hematose e transporte de gases</li>
+                        <li>Sistema imunológico: resposta imune inata e adquirida</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">Geografia: Globalização e Economia</div>
+                    <div class="subtopic">Blocos econômicos • Comércio internacional • BRICS</div>
+                    <p class="objective">🎯 Analisar os fluxos econômicos globais e a inserção do Brasil.</p>
+                    <ul class="learn-list">
+                        <li>Fases da globalização e meio técnico-científico-informacional</li>
+                        <li>Blocos econômicos: UE, Mercosul, NAFTA</li>
+                        <li>BRICS e a nova ordem multipolar</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia Corpo Humano e Geometria Analítica (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar Eletricidade e Guerras Mundiais (Semana 12)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Inverter a ordem dos pontos na fórmula da distância (não importa, mas cuidado com o sinal)</li>
+                        <li>Confundir as funções do intestino delgado e grosso</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">d = √[(Δx)² + (Δy)²]</span>
+                    <span class="formula-box">y = mx + n</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 14 -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana14">
+            <div class="week-header">
+                <span class="week-number">SEMANA 14</span>
+                <span class="week-phase">📙 Aprofundamento</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">13 a 19 de Outubro</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Revisão Geral: Funções e Geometria</div>
+                    <div class="subtopic">Questões integradas • Função afim, quadrática, exponencial</div>
+                    <p class="objective">🎯 Consolidar conhecimentos de funções e geometria com questões ENEM.</p>
+                    <ul class="learn-list">
+                        <li>Revisão de função afim, quadrática e exponencial</li>
+                        <li>Revisão de geometria plana e espacial</li>
+                        <li>Resolução de questões interdisciplinares</li>
+                    </ul>
+                    <span class="quest-count">📝 15 questões ENEM</span>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Revisão de Literatura</div>
+                    <div class="subtopic">Todas as escolas literárias</div>
+                    <p class="objective">🎯 Revisar as principais características de cada escola literária.</p>
+                    <ul class="learn-list">
+                        <li>Linha do tempo: Trovadorismo ao Modernismo</li>
+                        <li>Principais autores e obras de cada período</li>
+                        <li>Questões de identificação de estilo</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                    <div class="redacao-note">📝 Redação: Simulado — Escreva redação completa em 60 minutos.</div>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Física: Ondulatória e Óptica</div>
+                    <div class="subtopic">Ondas • Luz • Fenômenos ópticos</div>
+                    <p class="objective">🎯 Compreender fenômenos ondulatórios e princípios da óptica geométrica.</p>
+                    <ul class="learn-list">
+                        <li>Ondas: frequência, período, comprimento de onda (v = λ·f)</li>
+                        <li>Reflexão e refração da luz</li>
+                        <li>Lentes e formação de imagens</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">Revisão: História Geral e do Brasil</div>
+                    <div class="subtopic">Linha do tempo completa</div>
+                    <p class="objective">🎯 Consolidar a cronologia dos principais eventos históricos.</p>
+                    <ul class="learn-list">
+                        <li>Brasil: Colônia → Império → República → Era Vargas → Ditadura</li>
+                        <li>Mundo: Guerras Mundiais, Guerra Fria, Globalização</li>
+                        <li>Questões de contextualização histórica</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Releia Ondulatória e resumo de História (15 min)</li>
+                        <li><strong>7 dias:</strong> Revisar Corpo Humano e Globalização (Semana 13)</li>
+                        <li><strong>30 dias:</strong> Revisar Eletricidade (Semana 12)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Erros Comuns</h4>
+                    <ul>
+                        <li>Confundir reflexão com refração</li>
+                        <li>Trocar a ordem cronológica dos períodos literários</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Fórmulas para Memorizar</h4>
+                    <span class="formula-box">v = λ · f</span>
+                    <span class="formula-box">n₁senθ₁ = n₂senθ₂</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 15 — RETA FINAL -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana15">
+            <div class="week-header revision">
+                <span class="week-number">SEMANA 15</span>
+                <span class="week-phase">🏁 Reta Final</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">20 a 26 de Outubro</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Simulado + Revisão de Erros</div>
+                    <div class="subtopic">30 questões de Matemática (ENEM anteriores)</div>
+                    <p class="objective">🎯 Simular condições de prova e analisar erros.</p>
+                    <ul class="learn-list">
+                        <li>Resolver 30 questões de Matemática em 1h30</li>
+                        <li>Corrigir e anotar os erros</li>
+                        <li>Revisar os tópicos com maior incidência de erro</li>
+                    </ul>
+                    <span class="quest-count">📝 30 questões ENEM (simulado)</span>
+                    <div class="revision-badge"><strong>🔄 Revisão:</strong> Fórmulas de geometria, funções e probabilidade</div>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Simulado de Linguagens</div>
+                    <div class="subtopic">20 questões + 1 Redação</div>
+                    <p class="objective">🎯 Treinar tempo de prova e praticar redação sob pressão.</p>
+                    <ul class="learn-list">
+                        <li>20 questões de Linguagens em 40 minutos</li>
+                        <li>Redação completa em 50 minutos</li>
+                        <li>Correção e autoavaliação</li>
+                    </ul>
+                    <span class="quest-count">📝 20 questões + Redação</span>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Revisão de Tópicos Mais Cobrados</div>
+                    <div class="subtopic">Ecologia • Genética • Eletricidade • Estequiometria</div>
+                    <p class="objective">🎯 Revisar os temas de maior incidência no ENEM.</p>
+                    <ul class="learn-list">
+                        <li>Releitura de resumos e mapas mentais</li>
+                        <li>Foco em interpretação de gráficos e tabelas</li>
+                        <li>15 questões dos temas mais cobrados</li>
+                    </ul>
+                    <span class="quest-count">📝 15 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">Revisão de Tópicos Mais Cobrados</div>
+                    <div class="subtopic">Era Vargas • Geopolítica • Climatologia • Ética</div>
+                    <p class="objective">🎯 Revisar os temas de maior incidência no ENEM.</p>
+                    <ul class="learn-list">
+                        <li>Releitura de resumos e linhas do tempo</li>
+                        <li>Foco em questões de cidadania e direitos humanos</li>
+                        <li>15 questões dos temas mais cobrados</li>
+                    </ul>
+                    <span class="quest-count">📝 15 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Revisar erros do simulado de Matemática</li>
+                        <li><strong>7 dias:</strong> Revisar Ondulatória e História Geral (Semana 14)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Estratégia Reta Final</h4>
+                    <ul>
+                        <li><strong>Priorize questões:</strong> mais importante que teoria nova</li>
+                        <li><strong>Durma bem:</strong> sono é fundamental para consolidação da memória</li>
+                        <li><strong>Redação:</strong> treine pelo menos 2x por semana</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 16 — RETA FINAL -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana16">
+            <div class="week-header revision">
+                <span class="week-number">SEMANA 16</span>
+                <span class="week-phase">🏁 Reta Final</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">27 Out a 02 Nov</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Análise de Erros e Fórmulas</div>
+                    <div class="subtopic">Revisão de todas as fórmulas principais</div>
+                    <p class="objective">🎯 Memorizar as fórmulas essenciais e revisar erros recorrentes.</p>
+                    <ul class="learn-list">
+                        <li>Revisão de todas as fórmulas (geometria, funções, estatística, financeira)</li>
+                        <li>Refazer questões que errou nas semanas anteriores</li>
+                        <li>Foco em interpretação de gráficos</li>
+                    </ul>
+                    <span class="quest-count">📝 20 questões (revisão de erros)</span>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Redação: Treino Intensivo</div>
+                    <div class="subtopic">Estrutura • Conectivos • Proposta de intervenção</div>
+                    <p class="objective">🎯 Garantir domínio completo da estrutura dissertativa-argumentativa.</p>
+                    <ul class="learn-list">
+                        <li>Escrever 1 redação completa</li>
+                        <li>Revisar todas as redações anteriores e identificar padrões de erro</li>
+                        <li>Memorizar 5 repertórios curinga (citações, leis, dados)</li>
+                    </ul>
+                    <span class="quest-count">📝 1 Redação + revisão das anteriores</span>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Simulado de Natureza</div>
+                    <div class="subtopic">30 questões (Biologia, Química, Física)</div>
+                    <p class="objective">🎯 Simular o tempo real e identificar pontos fracos restantes.</p>
+                    <ul class="learn-list">
+                        <li>30 questões em 1h30</li>
+                        <li>Correção detalhada</li>
+                        <li>Revisão dos 3 tópicos com mais erros</li>
+                    </ul>
+                    <span class="quest-count">📝 30 questões ENEM</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">Simulado de Humanas</div>
+                    <div class="subtopic">30 questões (História, Geografia, Filosofia, Sociologia)</div>
+                    <p class="objective">🎯 Simular o tempo real e revisar temas de maior incidência.</p>
+                    <ul class="learn-list">
+                        <li>30 questões em 1h30</li>
+                        <li>Correção detalhada</li>
+                        <li>Revisão dos 3 tópicos com mais erros</li>
+                    </ul>
+                    <span class="quest-count">📝 30 questões ENEM</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Revisões da Semana</h4>
+                    <ul>
+                        <li><strong>24h (Sexta):</strong> Revisar erros dos simulados de Natureza e Humanas</li>
+                        <li><strong>7 dias:</strong> Revisar Simulado de Matemática (Semana 15)</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Checklist Pré-Prova</h4>
+                    <ul>
+                        <li>✔️ Fórmulas de Matemática memorizadas</li>
+                        <li>✔️ Estrutura da redação automatizada</li>
+                        <li>✔️ 5 repertórios socioculturais na ponta da língua</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SEMANA 17 — VÉSPERA DA PROVA -->
+        <!-- ============================================ -->
+        <section class="week-section" id="semana17">
+            <div class="week-header revision">
+                <span class="week-number">SEMANA 17</span>
+                <span class="week-phase">🏁 Véspera da Prova</span>
+                <span style="color:var(--text-secondary);font-size:0.85rem;">03 a 08 de Novembro</span>
+            </div>
+            <div class="days-grid">
+                <div class="day-card seg">
+                    <div class="day-label">📅 Segunda-feira</div>
+                    <div class="discipline-tag">Matemática</div>
+                    <div class="main-topic">Revisão Leve: Fórmulas e Macetes</div>
+                    <div class="subtopic">Revisão de fórmulas essenciais</div>
+                    <p class="objective">🎯 Última revisão de fórmulas e estratégias de prova.</p>
+                    <ul class="learn-list">
+                        <li>Releitura do resumo de fórmulas</li>
+                        <li>10 questões fáceis para manter o ritmo</li>
+                        <li>Estratégia: começar pelas questões fáceis</li>
+                    </ul>
+                    <span class="quest-count">📝 10 questões (nível fácil/médio)</span>
+                </div>
+                <div class="day-card ter">
+                    <div class="day-label">📅 Terça-feira</div>
+                    <div class="discipline-tag">Linguagens + Redação</div>
+                    <div class="main-topic">Última Redação e Revisão</div>
+                    <div class="subtopic">Checklist final da redação</div>
+                    <p class="objective">🎯 Garantir que todos os elementos da redação estão automatizados.</p>
+                    <ul class="learn-list">
+                        <li>Escrever 1 última redação (ou revisar a estrutura mentalmente)</li>
+                        <li>Revisar conectivos e proposta de intervenção</li>
+                        <li>Checklist: tema delimitado, tese clara, 2 argumentos, proposta completa</li>
+                    </ul>
+                    <span class="quest-count">📝 Revisão leve + 1 Redação (opcional)</span>
+                </div>
+                <div class="day-card qua">
+                    <div class="day-label">📅 Quarta-feira</div>
+                    <div class="discipline-tag">Ciências da Natureza</div>
+                    <div class="main-topic">Revisão Leve: Conceitos-Chave</div>
+                    <div class="subtopic">Ecologia • Genética • Física térmica • Química ambiental</div>
+                    <p class="objective">🎯 Reforçar os conceitos mais prováveis para a prova.</p>
+                    <ul class="learn-list">
+                        <li>Releitura de resumos e flashcards</li>
+                        <li>Foco em interpretação de fenômenos cotidianos</li>
+                        <li>Sem pressão: apenas consolidar</li>
+                    </ul>
+                    <span class="quest-count">📝 8 questões (revisão leve)</span>
+                </div>
+                <div class="day-card qui">
+                    <div class="day-label">📅 Quinta-feira</div>
+                    <div class="discipline-tag">Ciências Humanas</div>
+                    <div class="main-topic">Revisão Leve: Cidadania e Atualidades</div>
+                    <div class="subtopic">Direitos humanos • Democracia • Questões sociais</div>
+                    <p class="objective">🎯 Alinhar os conhecimentos com as possíveis temáticas da redação.</p>
+                    <ul class="learn-list">
+                        <li>Revisão de cidadania, constituição e direitos</li>
+                        <li>Conexão com possíveis temas de redação</li>
+                        <li>Relaxar: confiar na preparação</li>
+                    </ul>
+                    <span class="quest-count">📝 5 questões (revisão leve)</span>
+                </div>
+            </div>
+            <div class="week-summary">
+                <div class="summary-block">
+                    <h4>🔄 Véspera da Prova (Sexta e Sábado)</h4>
+                    <ul>
+                        <li><strong>Sexta-feira:</strong> Descanso. Apenas revisão mental leve. Separar documentos e materiais.</li>
+                        <li><strong>Sábado:</strong> Prova! Chegar cedo, levar água e lanche. Confiar na preparação.</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>⚠️ Checklist Dia da Prova</h4>
+                    <ul>
+                        <li>✔️ Documento com foto</li>
+                        <li>✔️ Caneta preta (múltiplas)</li>
+                        <li>✔️ Água e lanche</li>
+                        <li>✔️ Chegar com 1h de antecedência</li>
+                        <li>✔️ Confiança: você se preparou!</li>
+                    </ul>
+                </div>
+                <div class="summary-block">
+                    <h4>🧠 Lembrete Final</h4>
+                    <p style="color:#ffd32a;font-weight:600;">Você seguiu um plano de 17 semanas. Confie no processo. Boa prova! 🍀</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>📚 Cronograma ENEM 2026 — Plano de 17 semanas | Estude com consistência e confie no processo.</p>
+        <p style="color:var(--accent-light);">Bons estudos! ✨</p>
+    </footer>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SCRIPTS -->
+    <!-- ═══════════════════════════════════════ -->
+    <script>
+        // Highlight active week in navigation on scroll
+        const sections = document.querySelectorAll('.week-section');
+        const navLinks = document.querySelectorAll('.week-nav a');
+
+        function updateActiveLink() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 250) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+        updateActiveLink();
+
+        // Smooth scroll for navigation links
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Print current date on header
+        console.log('📚 Cronograma ENEM 2026 carregado com sucesso!');
+        console.log('✅ 17 semanas planejadas');
+        console.log('✅ Revisões espaçadas (24h, 7 dias, 30 dias)');
+        console.log('✅ Reta final com simulados');
+    </script>
+</body>
+</html>
